@@ -8,6 +8,7 @@ server_address=('0.0.0.0',7777)
 
 def send_command(command_str=""):
     global server_address
+    
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(server_address)
     logging.warning(f"connecting to {server_address}")
@@ -74,14 +75,13 @@ def remote_delete(filename=""):
     if (hasil['status']=='OK'):
         print(hasil['data'])
         return True
-    
-    print(hasil['data'])
-    print("Gagal")
-    return False
+   else:
+        print("Gagal")
+        return False
 
 def remote_post(filename=""):
     if not os.path.exists(filename):
-        print(f"Gagal: file{filename} tidak ditemukan")
+        print(f"Gagal: file tidak ditemukan")
         return False
     
     fp = open(f"{filename}",'rb')
@@ -93,23 +93,24 @@ def remote_post(filename=""):
     if (hasil['status']=='OK'):
         print(hasil['data'])
         return True
-    
-    print(hasil['data'])
-    print("Gagal")
-    return False
+    else:
+        print("Gagal")
+        return False
 
 
 if __name__=='__main__':
     server_address=('172.16.16.101',6666)
     
-    # list
+    #LIST
     remote_list()
     
-    # get
+    #GET
     remote_get('pokijan.jpg')
     
-    # delete
+    #DELETE
     remote_delete(filename="gambar-lalu-lintas-lucu-2.jpg")
     
-    # post
+    #POST
     remote_post(filename="donalbebek.jpg")
+    
+    
