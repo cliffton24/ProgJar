@@ -27,10 +27,12 @@ class FileInterface:
             return dict(status='ERROR',data=str(e))
     
     def delete(self,params=[]):
+        
         if not (len(params) == 1):
-            return dict(status='ERROR',data='jumlah parameter harus satu')
+            return dict(status='ERROR',data='harus ada satu parameter')
         
         filename = params[0]
+        
         if not os.path.exists(filename):
             return dict(status='ERROR',data=f'file {filename} tidak ditemukan')
         
@@ -39,12 +41,13 @@ class FileInterface:
         return dict(status='OK',data=f'file {filename} berhasil dihapus')
     
     def post(self,params=[]):
+        
         if not (len(params) == 2):
-            return dict(status='ERROR',data='jumlah parameter harus dua')
+            return dict(status='ERROR',data='harus ada dua parameter')
         
         filename = params[0]
         if os.path.exists(filename):
-            return dict(status='ERROR',data=f'terdapat file dengan nama {filename} pada lokasi yang sama')
+            return dict(status='ERROR',data=f'file dengan nama {filename} sudah ada')
         
         file = base64.b64decode(params[1])
         
@@ -52,12 +55,12 @@ class FileInterface:
         fp.write(file)
         fp.close()
         
-        return dict(status='OK',data=f'file {filename} berhasil disimpan')
+        return dict(status='OK',data=f'file dengan nama {filename} berhasil diupload')
 
 if __name__=='__main__':
     f = FileInterface()
-    print(f.list())
-    # print(f.get(['pokijan.jpg']))
+    #print(f.list())
+    #print(f.get(['pokijan.jpg']))
     
-    print(f.delete(['deletethis.jpg']))
+    #print(f.delete(['deletethis.jpg']))
     
