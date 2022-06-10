@@ -4,8 +4,6 @@ import shlex
 
 from file_interface import FileInterface
 
-
-
 class FileProtocol:
     def __init__(self):
         self.file = FileInterface()
